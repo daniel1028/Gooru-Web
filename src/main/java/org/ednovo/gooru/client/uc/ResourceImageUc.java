@@ -29,6 +29,7 @@ import java.util.Map;
 
 import org.ednovo.gooru.client.PlaceTokens;
 import org.ednovo.gooru.client.gin.AppClientFactory;
+import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.util.ImageUtil;
 import org.ednovo.gooru.client.util.MixpanelUtil;
 import org.ednovo.gooru.shared.i18n.MessageProperties;
@@ -91,6 +92,8 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 //	private static final String DEFAULT_THUMBNAIL = "slides/thumbnail.jpg";
 
 	private boolean failedThumbnailGeneration = false;
+	
+	private String collectionType=null;
 
 	/**
 	 * Class constructor
@@ -168,7 +171,8 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 		}
 		
 	}
-	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId,String title, boolean youtube, String narration) {
+	public void renderSearch(String category, String thumbnailUrl, String realUrl,String collectionItemId,String title, boolean youtube, String narration,String collectionType,String collectionId) {
+		this.collectionType=collectionType;
 		String categoryString = category == null || category.startsWith("assessment") ? ImageUtil.QUESTION : category.toLowerCase();
 		String cssName = categoryString.trim() + i18n.GL0900();
 		resourceType.addStyleName(cssName);
@@ -235,51 +239,54 @@ public class ResourceImageUc extends Composite implements ClickHandler {
 	@Override
 	public void onClick(ClickEvent event) {
 		//Implementing Mixpanel
-		if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
-			MixpanelUtil.Preview_Resource_From_Profile("ResourceImageUc");
-		} else {
-			MixpanelUtil.Preview_Resource_From_Search("ResourceImageUc");
-		}
-		String gooruOid = getResourceId();
-		String collectionIdVal = getCollectionId();
-		if((collectionId == null || collectionId.isEmpty())&& !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF) && !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE) && !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH))
-		{
-			Map<String, String> params = new HashMap<String, String>();
-			params.put("id", getResourceId());
-			params.put("pn", getPlayerName());
-			AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
-		}
-		else
-		{
-			if(suggestFlag){
+			if(AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE)) {
+				MixpanelUtil.Preview_Resource_From_Profile("ResourceImageUc");
+			} else {
+				MixpanelUtil.Preview_Resource_From_Search("ResourceImageUc");
+			}
+			String gooruOid = getResourceId();
+			String collectionIdVal = getCollectionId();
+			if((collectionId == null || collectionId.isEmpty())&& !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.SHELF) && !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.PROFILE_PAGE) && !AppClientFactory.getCurrentPlaceToken().equalsIgnoreCase(PlaceTokens.COLLECTION_SEARCH))
+			{
 				Map<String, String> params = new HashMap<String, String>();
 				params.put("id", getResourceId());
 				params.put("pn", getPlayerName());
 				AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
-			}else{
-				if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
-					String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
-					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-						
-						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
-						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid);
-						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					}
-				}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
-					if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
-						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
-						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					}else{
-						PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
-						AppClientFactory.getPlaceManager().revealPlace(false,request,true);
-					}
-				}
-			
-			
 			}
-		}
+			else
+			{
+				if(suggestFlag){
+					Map<String, String> params = new HashMap<String, String>();
+					params.put("id", getResourceId());
+					params.put("pn", getPlayerName());
+					AppClientFactory.getPlaceManager().revealPlace(PlaceTokens.RESOURCE_PLAY, params);
+				}else{
+					if(AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.SHELF)){
+						String collectionId=AppClientFactory.getPlaceManager().getRequestParameter("id", null);
+						if(collectionType!=null&&!collectionType.equals(ShelfPresenter.ASSESSMENT)){
+							if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
+								PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid).with("tab", "narration");
+								AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+							}else{
+								PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", collectionId).with("rid", gooruOid);
+								AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+							}
+						}else{
+							Window.open(AppClientFactory.loggedInUser.getSettings().getAssessementEndPoint()+PlaceTokens.PLAY_ASSIGNMENT+collectionId, "_blank", "");
+						}
+					}else if (AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.PROFILE_PAGE) || AppClientFactory.getCurrentPlaceToken().equals(PlaceTokens.COLLECTION_SEARCH)){
+						if(getNarration()!=null&& !getNarration().equalsIgnoreCase("")){
+							PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid).with("tab", "narration");
+							AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+						}else{
+							PlaceRequest request=new PlaceRequest(PlaceTokens.COLLECTION_PLAY).with("id", getProfilePageMoreInfoCollectionId()).with("rid", gooruOid);
+							AppClientFactory.getPlaceManager().revealPlace(false,request,true);
+						}
+					}
+				
+				
+				}
+			}
 /*		Map<String, String> params = new HashMap<String, String>();
 		params.put("id", getResourceId());
 		params.put("pn", getPlayerName());

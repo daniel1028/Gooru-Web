@@ -5,16 +5,15 @@
 <!-- <meta http-equiv="X-UA-Compatible" content="IE=9"> -->
 <meta http-equiv="X-UA-Compatible" content="IE=9" />
 <!-- <meta name="viewport" content="width=640, user-scalable=no"> -->
-<link type="text/css" rel="stylesheet" href="css/fi/foundation-icons.css">
-<!-- <link type="text/css" rel="stylesheet" href="css/css/font-awesome.css"> -->
+<link type="text/css" rel="stylesheet" href="${cdn.endpoint}/css/fi/foundation-icons.css">
+<link type="text/css" rel="stylesheet" href="${cdn.endpoint}/css/gooru.css">
+<link type="text/css" rel="stylesheet" href="${cdn.endpoint}/css/gooru-global.css">
+<link href='${cdn.endpoint}/css/bootstrap.css' rel='stylesheet' type='text/css'>
+<link href='${cdn.endpoint}/css/landingpage.css' rel='stylesheet' type='text/css'>
+
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-<link type="text/css" rel="stylesheet" href="css/gooru.css">
-<link type="text/css" rel="stylesheet" href="css/gooru-global.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css">
 <link href='//fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-
-<link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
-<link href='css/landingpage.css' rel='stylesheet' type='text/css'>
 
 
 <meta name="description" content="" />
@@ -23,11 +22,11 @@
 <title>Gooru | Sign up, Sign in </title>
 <script type="text/javascript" src='newgooru/newgooru.nocache.js'></script>
 <script type="text/javascript"
-	src="scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js"></script>
+	src="${cdn.endpoint}/scripts/tinymce/tinymce/jscripts/tiny_mce/plugins/asciimath/js/ASCIIMathMLwFallback.js"></script>
 <script type="text/javascript"
-	src="scripts/errorImageFunction.js"></script>
+	src="${cdn.endpoint}/scripts/errorImageFunction.js"></script>
 	<script type="text/javascript"
-	src="scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+	src="${cdn.endpoint}/scripts/tinymce/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script>
      (function() {
  	    var et = document.createElement('script'); et.type = 'text/javascript'; et.async= true;
@@ -67,52 +66,6 @@
 </script>
 
 <link rel="icon" type="image/png" href="images/favicon.png?v=${gooru.release.version}" />
-<!-- <link rel="icon" type="image/x-icon" href="images/newfavicon.ico?v=${gooru.release.version}" /> -->
-<!-- start Mixpanel -->
-<!-- <script type="text/javascript" id="mixpanel_header">
-var mixpanelApiKey = '${mixpanel.apikey}';
-(function(e, b) {
-  if (!b.__SV) {
-    var a, f, i, g;
-    window.mixpanel = b;
-    a = e.createElement("script");
-    a.type = "text/javascript";
-    a.async = !0;
-    a.src = ("https:" === e.location.protocol ? "https:" : "http:") + '//cdn.mxpnl.com/libs/mixpanel-2.2.min.js';
-    f = e.getElementsByTagName("script")[0];
-    f.parentNode.insertBefore(a, f);
-    b._i = [];
-    b.init = function(a, e, d) {
-      function f(b, h) {
-        var a = h.split(".");
-        2 == a.length && (b = b[a[0]], h = a[1]);
-        b[h] = function() {
-          b.push([h].concat(Array.prototype.slice.call(arguments, 0)))
-        }
-      }
-      var c = b;
-      "undefined" !== typeof d ? c = b[d] = [] : d = "mixpanel";
-      c.people = c.people || [];
-      c.toString = function(b) {
-        var a = "mixpanel";
-        "mixpanel" !== d && (a += "." + d);
-        b || (a += " (stub)");
-        return a
-      };
-      c.people.toString = function() {
-        return c.toString(1) + ".people (stub)"
-      };
-      i = "disable track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config people.set people.set_once people.increment people.append people.track_charge people.clear_charges people.delete_user".split(" ");
-      for (g = 0; g < i.length; g++) f(c, i[g]);
-      b._i.push([a, e, d])
-    };
-    b.__SV = 1.2
-  }
-})(document, window.mixpanel || []);
-mixpanel.init(mixpanelApiKey); 
-</script> --><!-- end Mixpanel -->
-<!-- production : b6b82f4d-0e6e-4ad5-96d9-30849cf17727; QA: 33b9ad34-1a0c-43ba-bb9c-4784abe07110 -->
-<!-- production : insights.goorulearning.org/log/et.min.js?v=1; QA: qa.logapi.goorulearning.org/js-sdk/et-qa.js?v=1 -->
 <script type="text/javascript">
 		<!--
 	   		var _et = _et || {};

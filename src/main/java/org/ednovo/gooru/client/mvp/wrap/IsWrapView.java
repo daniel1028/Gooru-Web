@@ -83,6 +83,8 @@ public interface IsWrapView extends IsView {
 
 	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
 
-	void openPreFilter(); 
+	void openPreFilter();
+
+	void updateUserHeaderProfileImage(String imageUrl); 
 	
 }

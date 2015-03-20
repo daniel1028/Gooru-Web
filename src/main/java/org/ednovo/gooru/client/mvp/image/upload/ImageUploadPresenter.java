@@ -30,6 +30,7 @@ import org.ednovo.gooru.client.mvp.classpages.event.UpdateClasspageImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUpdateProfileImageEvent;
 import org.ednovo.gooru.client.mvp.home.event.SetUserProfileImageEvent;
 import org.ednovo.gooru.client.mvp.profilepage.event.SetUserPublicProfileImageEvent;
+import org.ednovo.gooru.client.mvp.profilepage.event.UpdateProfileHeaderImageEvent;
 import org.ednovo.gooru.client.mvp.shelf.IsShelfView;
 import org.ednovo.gooru.client.mvp.shelf.ShelfPresenter;
 import org.ednovo.gooru.client.mvp.shelf.collection.tab.resource.add.AddResourcePresenter;
@@ -272,6 +273,7 @@ public class ImageUploadPresenter extends PresenterWidget<IsImageUploadView> imp
 				else{
 					AppClientFactory.fireEvent(new SetUserPublicProfileImageEvent(imageUrl));
 				}
+				AppClientFactory.fireEvent(new UpdateProfileHeaderImageEvent(imageUrl));
 				getView().closeImageUploadWidget();
 				getView().resetImageUploadWidget();
 			}

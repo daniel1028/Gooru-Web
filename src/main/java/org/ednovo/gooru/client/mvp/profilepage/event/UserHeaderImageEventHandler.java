@@ -22,69 +22,20 @@
  *  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-package org.ednovo.gooru.client.mvp.wrap;
+/**
+ * 
+ */
+package org.ednovo.gooru.client.mvp.profilepage.event;
 
-import org.ednovo.gooru.client.gin.IsView;
-import org.ednovo.gooru.client.mvp.home.event.HeaderTabType;
-import org.ednovo.gooru.client.mvp.home.presearchstandards.AddStandardsPreSearchPresenter;
-import org.ednovo.gooru.shared.model.user.UserDo;
+
+import com.google.gwt.event.shared.EventHandler;
 
 /**
  * @author Search Team
  * 
  */
-public interface IsWrapView extends IsView {
-	
-	/**
-	 * Enable or disable logIn popup
-	 */
-	void invokeLogin();
-	
-	/**
-	 * Enable or disable register popup
-	 */
-	void invokeRegister();
-	
-	/**
-	 * Set loggedIn user details
-	 * @param user instance of {@link UserDo}
-	 */
-	void setLoginData(UserDo user);
-	
-	/**
-	 * Set enable or disable search bar
-	 * @param activate if is true active bar is visible or invisible 
-	 */
-	void activateSearchBar(boolean activate);
-	
-	/**
-	 * Set enabled or disabled classic url link
-	 * @param activate if is true classic url link is visible or invisible 
-	 */
-	void activateClassicButton(boolean activate);
-	
-	/**
-	 * Create gooru guide view 
-	 * 
-	 */
-	void invokeGooruGuideBubble();
-	
-	/**
-	 * Set Dots Panel Selection in Header
-	 * 
-	 */
-	void setDotsPanelSelection(HeaderTabType tabType);
+public interface UserHeaderImageEventHandler extends EventHandler {
 
-	/**
-	 * Set Discover link from the library page
-	 * 
-	 */
-	void setDiscoverLinkFromLibrary(String discoverLink);
+	void setUserHeaderProfileImage(String imageUrl);
 
-	void showPrefilter(AddStandardsPreSearchPresenter addStandardsPresenter);
-
-	void openPreFilter();
-
-	void updateUserHeaderProfileImage(String imageUrl); 
-	
 }
